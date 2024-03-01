@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Знакомство с библиотекой vue 3</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/my.css">
+    <script defer src="assets/js/vue.3.4.21.global.js"></script>
+    <script defer src="assets/js/my.js"></script>
+
+</head>
+<body id="app">
+
+<div :class="{theme_dark: isDark}">
+    <nav>
+        <ul class="nav">
+            <li class="p-4"><a @click="linkpage('main')" href="#">Главная</a></li>
+            <li class="p-4"><a @click="linkpage('auth')" href="#">Авторизация</a></li>
+            <li class="p-4"><a @click="linkpage('reg')" href="#">Региcтрация</a></li>
+            <li class="p-4"><a @click="linkpage('to-do')" href="#">Список дел</a></li>
+            <li class="p-4"><a @click="linkpage('component')" href="#">Компоненты</a></li>
+            <li class="p-4"><a @click="linkpage('posts')" href="#">Посты</a></li>
+            <li class="p-4"><a @click="theme" href="#">{{ theme_name }}</a></li>
+        </ul>
+    </nav>
+
+    <section class="p-2" v-if="page === 'main'">
+        <h2>Декларативная отрисовка</h2>
+        <p v-bind:title="title">Счетчик: {{ counter }}</p>
+        <p :title="title">{{ message }}</p>
+        <button class="btn btn-success" v-on:click="reverseMessage">Перевернуть сообщение</button>
+        <button class="btn btn-success m-2" @click="reverseMessage">Перевернуть сообщение</button>
+        <p>Пароль в поле: {{ message_form }}</p>
+        <input v-model="message_form" class="form-control" :type="type_input">
+        <button @click="show" class="btn btn-warning">Показать пароль</button>
+        <button @click="hide" class="btn btn-warning m-2">Скрыть пароль</button>
+    </section>
+
+    <section class="p-2" v-if="page === 'auth'">
+        <h2>Авторизация</h2>
+        <form class="form-control">
+            <input class="form-control m-3 w-50" type="text" placeholder="Введи логин">
+            <input class="form-control m-3 w-50" type="password" placeholder="Введи пароль">
+            <button class="btn btn-dark m-3 w-50">Вход</button>
+        </form>
+    </section>
+
+    <section class="p-2" v-if="page === 'reg'">
+        <h2>Регистрация</h2>
+        <form class="form-control">
+            <input class="form-control m-3 w-50" type="text" placeholder="Введи ФИО">
+            <input class="form-control m-3 w-50" type="text" placeholder="Введи логин">
+            <input class="form-control m-3 w-50" type="password" placeholder="Введи пароль">
+            <button class="btn btn-dark m-3 w-50">Создать аккаунт</button>
+        </form>
+    </section>
+
+    <section class="p-2" v-if="page === 'to-do'">
+        <h2>Список дел (как массив элементов)</h2>
+        <ul>
+            <li v-for="todo in todos1">{{todo}}</li>
+        </ul>
+
+        <h2>Список дел (как массив объектов)</h2>
+        <ul>
+            <li v-for="todo in todos2">{{todo.time}} - {{todo.text}}</li>
+        </ul>
+    </section>
+
+    <section class="p-2" v-if="page === 'component'">
+        <card></card>
+        <spisok-fu></spisok-fu>
+    </section>
+
+    <section class="p-2" v-if="page === 'posts'">
+        <h2>Новости</h2>
+        <div class="card m-2 p-2" v-for="post in posts">
+            <div class="card-header"><h3>{{ post.title }}</h3></div>
+            <div class="card-body">{{ post.body }}</div>
+            <div class="card-footer"> Автор: {{ users[post.userId - 1].name }} </div>
+
+        </div>
+    </section>
+</div>
+
+</body>
+</html>
